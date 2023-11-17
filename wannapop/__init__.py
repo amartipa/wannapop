@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+from config import Config 
 
 db_manager = SQLAlchemy()
 
@@ -8,17 +9,9 @@ def create_app():
     # Construct the core app object
     app = Flask(__name__)
 
-    # Secret key
-    app.config["SECRET_KEY"] = "Valor aleatori molt llarg i super secret"
-
-    # ruta absoluta d'aquesta carpeta
-    basedir = os.path.abspath(os.path.dirname(__file__)) 
-
-    # paràmetre que farà servir SQLAlchemy per a connectar-se
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + basedir + "/../database.db"
-    # mostre als logs les ordres SQL que s'executen
-    app.config["SQLALCHEMY_ECHO"] = True
-
+    # Configura la aplicación con la clase Config de config.py
+    app.config.from_object(Config)
+    
     # Inicialitza els plugins
     db_manager.init_app(app)
 
