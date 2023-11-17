@@ -120,7 +120,7 @@ def __manage_photo_file(photo_file):
         filename = photo_file.data.filename.lower()
 
         # és una foto
-        if filename.endswith(('.png', '.jpg', '.jpeg')):
+        if filename.endswith(('.png', '.jpg', '.jpeg', '.jfif')):
             # M'asseguro que el nom del fitxer és únic per evitar col·lissions
             unique_filename = str(uuid.uuid4())+ "-" + secure_filename(filename)
             photo_file.data.save(__uploads_folder + unique_filename)

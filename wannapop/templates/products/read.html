@@ -1,17 +1,32 @@
-{% extends '_template.html' %}
+{% extends 'layout.html' %}
 {% block content %}
 
-<h3>Producte {{ product.id }}</h3>
-<a href="/products/update/{{ product.id }}">Modificar producte</a>
-<br />
-<a href="/products/delete/{{ product.id }}">Esborrar producte</a>
-<ul>
-   <li>Nom: {{ product.title }}</li>
-   <li>Descripció: {{ product.description }}</li>
-   <li>Preu: {{ product.price }}</li>
-   <li>Categoria: {{ category.name }} </li>
-</ul>
-<p><img src="/static/products/{{ product.photo }}" alt="{{ product.title }}" /></p>
-<a href="/products/list">&#x3c;&#x3c; Tornar al llistat de productes</a>
+<div class="container mt-5">
+    <h3>Producte {{ product.id }}</h3>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar producte</a>
+        <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Esborrar producte</a>
+    </div>
+
+    <div class="card" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="/static/products/{{ product.photo }}" class="card-img" alt="{{ product.title }}" style="max-height: 180px; object-fit: cover;">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Preu: {{ product.price }}</li>
+                        <li class="list-group-item">Categoria: {{ category.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="/products/list" class="btn btn-link mt-3">&#x3c;&#x3c; Tornar al llistat de productes</a>
+</div>
 
 {% endblock %}

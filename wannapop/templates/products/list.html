@@ -1,24 +1,32 @@
-{% extends '_template.html' %}
+{% extends 'layout.html' %}
 {% block content %}
-
-<h3>Productes</h3>
-<table>
-	<tr>
-		<th>ID</th>
-		<th>NOM</th>
-		<th>PREU</th>
-		<th>CATEGORIA</th>
-	</tr>
-
-	{% for (product, category) in products_with_category %}
-	<tr>
-		<td><a href="/products/read/{{ product.id }}">{{ product.id }}</a></td>
-		<td><a href="/products/read/{{ product.id }}">{{ product.title }}</a></td>
-		<td><a href="/products/read/{{ product.id }}">{{ product.price }}</a></td>
-		<td><a href="/products/read/{{ product.id }}">{{ category.name }}</a></td>
-	</tr>
-	{% endfor %}
-</table>
 <a href="/products/create">Crear un nou producte</a>
-
+<section class="py-5">
+	
+		<div class="container px-4 px-lg-5 mt-5 ">
+			<div class="row gx-4 gx-lg-5 row-cols-3 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				{% for (product, category) in products_with_category %}
+				<div class="col mb-5">
+					<div class="card h-100">
+						<!-- Product image-->
+						<img src="/static/products/{{ product.photo }}" alt="{{ product.title }}" />						<!-- Product details-->
+						<div class="card-body p-4">
+							<div class="text-center">
+								<!-- Product name-->
+								<h5 class="fw-bolder">{{ product.title }}</h5>
+								<!-- Product price-->
+								<a>{{ product.price }}</a>
+							</div>
+						</div>
+						<!-- Product actions-->
+						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+							<div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/products/read/{{ product.id }}">View options</a></div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	
+</section>
 {% endblock %}

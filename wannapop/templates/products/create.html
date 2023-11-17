@@ -1,19 +1,47 @@
-{% extends '_template.html' %}
+{% extends 'layout.html' %}
 {% from "_formhelpers.html" import render_errors %}
 {% block content %}
 
-<h3>Nou producte</h3>
+<div class="container mt-5">
+    <h3>Nou producte</h3>
 
-<form action="/products/create" method="POST" enctype="multipart/form-data">
-   {{ form.csrf_token }}
-   <p>{{ form.title.label }}: {{ form.title() }}</p>
-   <p>{{ form.description.label }}: {{ form.description() }}</p>
-   <p>{{ form.photo_file.label }}: {{ form.photo_file() }}</p>
-   <p>{{ form.price.label }}: {{ form.price() }}</p>
-   <p>{{ form.category_id.label }}: {{ form.category_id() }}</p>
-   <p>{{ form.submit(value="CREAR") }}</p>
-   {{ render_errors(form) }}
-</form>
-<a href="/products/list">&#x3c;&#x3c; Tornar al llistat de productes</a>
+    <form action="/products/create" method="POST" enctype="multipart/form-data" class="mt-4">
+        {{ form.csrf_token }}
+        
+        <div class="form-group">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.photo_file.label(class="form-label") }}
+            {{ form.photo_file(class="form-control-file") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.category_id.label(class="form-label") }}
+            {{ form.category_id(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary", value="CREAR") }}
+        </div>
+
+        <div class="form-group">
+            {{ render_errors(form) }}
+        </div>
+    </form>
+    <a href="/products/list" class="btn btn-link">&#x3c;&#x3c; Tornar al llistat de productes</a>
+</div>
 
 {% endblock %}
