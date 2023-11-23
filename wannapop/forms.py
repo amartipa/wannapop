@@ -3,6 +3,7 @@ from wtforms import PasswordField, StringField, DecimalField, SubmitField, Selec
 from wtforms.validators import DataRequired, NumberRange, InputRequired, Email
 import decimal
 
+
 class RegisterForm(FlaskForm):
     name = StringField(
         validators = [DataRequired()]
@@ -36,3 +37,10 @@ class ProductForm(FlaskForm):
 # Formulari generic per esborrar i aprofitar la CSRF Protection
 class DeleteForm(FlaskForm):
     submit = SubmitField()
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
+

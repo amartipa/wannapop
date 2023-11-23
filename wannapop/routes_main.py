@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
-from .models import Product, Category
-from .forms import ProductForm, DeleteForm
+from flask import Blueprint, render_template, redirect, url_for, flash, current_app
+from .models import Product, Category, User
+from .forms import ProductForm, DeleteForm, RegisterForm, LoginForm
 from werkzeug.utils import secure_filename
 from . import db_manager as db
 import uuid
@@ -15,6 +15,35 @@ main_bp = Blueprint(
 @main_bp.route('/')
 def init():
     return redirect(url_for('main_bp.product_list'))
+
+@main_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Aquí iría tu lógica de verificación de usuario
+        # Por ejemplo, verificar usuario y contraseña con la base de datos
+        flash('Login successful!')
+        return redirect(url_for('main_bp.product_list'))  # Redirige a la página principal u otra página
+    return render_template('users/login.html', form=form)
+
+@main_bp.route('/register', methods = ['POST', 'GET'])
+def wannapop_register():
+    form = RegisterForm()
+   
+
+    if form.validate_on_submit():
+        new_user = User()
+        form.populate_obj(new_user)
+
+        db.session.add(new_user)
+        db.session.commit()
+       
+        flash("Nou usuari creat", "success")
+        return redirect(url_for('main_bp.product_list'))
+       
+    else:
+        flash('Error al crear usuari')
+        return render_template('/users/register.html', form = form) 
 
 @main_bp.route('/products/list')
 def product_list():
