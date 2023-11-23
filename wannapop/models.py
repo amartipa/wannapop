@@ -1,5 +1,6 @@
 from . import db_manager as db
 from sqlalchemy.sql import func
+from flask_login import UserMixin
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -19,7 +20,7 @@ class Category(db.Model):
     name = db.Column(db.String, nullable=False)
     slug = db.Column(db.String, nullable=False)
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, unique=True)

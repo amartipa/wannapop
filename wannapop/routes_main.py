@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, current_app
+from flask_login import current_user, login_required
 from .models import Product, Category, User
 from .forms import ProductForm, DeleteForm, RegisterForm, LoginForm
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash
 from . import db_manager as db
 import uuid
 import os
@@ -14,38 +16,36 @@ main_bp = Blueprint(
 
 @main_bp.route('/')
 def init():
-    return redirect(url_for('main_bp.product_list'))
+    if current_user.is_authenticated:
+        return redirect(url_for('main_bp.product_list'))
+    else:
+        return redirect(url_for("auth_bp.login"))
 
-@main_bp.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Aquí iría tu lógica de verificación de usuario
-        # Por ejemplo, verificar usuario y contraseña con la base de datos
-        flash('Login successful!')
-        return redirect(url_for('main_bp.product_list'))  # Redirige a la página principal u otra página
-    return render_template('users/login.html', form=form)
-
-@main_bp.route('/register', methods = ['POST', 'GET'])
+@main_bp.route('/register', methods=['POST', 'GET'])
 def wannapop_register():
     form = RegisterForm()
-   
 
     if form.validate_on_submit():
-        new_user = User()
-        form.populate_obj(new_user)
+        # Crea un nuevo objeto de usuario
+        new_user = User(
+            name=form.name.data, 
+            email=form.email.data, 
+            password=generate_password_hash(form.password.data)  # Aplica hash a la contraseña
+        )
 
+        # Agrega el nuevo usuario a la base de datos
         db.session.add(new_user)
         db.session.commit()
-       
+
         flash("Nou usuari creat", "success")
         return redirect(url_for('main_bp.product_list'))
-       
     else:
         flash('Error al crear usuari')
-        return render_template('/users/register.html', form = form) 
+        return render_template('/users/register.html', form=form)
 
+    
 @main_bp.route('/products/list')
+@login_required
 def product_list():
     # select amb join que retorna una llista dwe resultats
     products_with_category = db.session.query(Product, Category).join(Category).order_by(Product.id.asc()).all()
@@ -53,6 +53,7 @@ def product_list():
     return render_template('products/list.html', products_with_category = products_with_category)
 
 @main_bp.route('/products/create', methods = ['POST', 'GET'])
+@login_required
 def product_create(): 
 
     # select que retorna una llista de resultats
@@ -64,7 +65,7 @@ def product_create():
 
     if form.validate_on_submit(): # si s'ha fet submit al formulari
         new_product = Product()
-        new_product.seller_id = None # en un el futur tindrà l'id de l'usuari autenticat
+        new_product.seller_id = current_user.id 
 
         # dades del formulari a l'objecte product
         form.populate_obj(new_product)
@@ -87,6 +88,7 @@ def product_create():
         return render_template('products/create.html', form = form)
 
 @main_bp.route('/products/read/<int:product_id>')
+@login_required
 def product_read(product_id):
     # select amb join i 1 resultat
     (product, category) = db.session.query(Product, Category).join(Category).filter(Product.id == product_id).one()
@@ -94,6 +96,7 @@ def product_read(product_id):
     return render_template('products/read.html', product = product, category = category)
 
 @main_bp.route('/products/update/<int:product_id>',methods = ['POST', 'GET'])
+@login_required
 def product_update(product_id):
     # select amb 1 resultat
     product = db.session.query(Product).filter(Product.id == product_id).one()
