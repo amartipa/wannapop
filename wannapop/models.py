@@ -26,6 +26,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, unique=True)
     email =db. Column(db.String, unique=True)
     password = db.Column(db.String)
+    role = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
     updated = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
 

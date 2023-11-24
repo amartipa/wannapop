@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, current_
 from flask_login import current_user, login_required
 from .models import Product, Category, User
 from .forms import ProductForm, DeleteForm, RegisterForm, LoginForm
+from .helper_role import require_view_permission, require_edit_permission, require_create_permission, require_delete_permission
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from . import db_manager as db
@@ -30,7 +31,8 @@ def wannapop_register():
         new_user = User(
             name=form.name.data, 
             email=form.email.data, 
-            password=generate_password_hash(form.password.data)  # Aplica hash a la contraseña
+            password=generate_password_hash(form.password.data),  # Aplica hash a la contraseña
+            role='wanner'
         )
 
         # Agrega el nuevo usuario a la base de datos
@@ -46,6 +48,7 @@ def wannapop_register():
     
 @main_bp.route('/products/list')
 @login_required
+@require_view_permission.require(http_exception=403)
 def product_list():
     # select amb join que retorna una llista dwe resultats
     products_with_category = db.session.query(Product, Category).join(Category).order_by(Product.id.asc()).all()
@@ -54,6 +57,7 @@ def product_list():
 
 @main_bp.route('/products/create', methods = ['POST', 'GET'])
 @login_required
+@require_create_permission.require(http_exception=403)
 def product_create(): 
 
     # select que retorna una llista de resultats
@@ -89,6 +93,7 @@ def product_create():
 
 @main_bp.route('/products/read/<int:product_id>')
 @login_required
+@require_view_permission.require(http_exception=403)
 def product_read(product_id):
     # select amb join i 1 resultat
     (product, category) = db.session.query(Product, Category).join(Category).filter(Product.id == product_id).one()
@@ -97,6 +102,7 @@ def product_read(product_id):
 
 @main_bp.route('/products/update/<int:product_id>',methods = ['POST', 'GET'])
 @login_required
+@require_edit_permission.require(http_exception=403)
 def product_update(product_id):
     # select amb 1 resultat
     product = db.session.query(Product).filter(Product.id == product_id).one()
@@ -128,20 +134,28 @@ def product_update(product_id):
         return render_template('products/update.html', product_id = product_id, form = form)
 
 @main_bp.route('/products/delete/<int:product_id>',methods = ['GET', 'POST'])
+@login_required
+@require_delete_permission.require(http_exception=403)
 def product_delete(product_id):
     # select amb 1 resultat
     product = db.session.query(Product).filter(Product.id == product_id).one()
 
-    form = DeleteForm()
-    if form.validate_on_submit(): # si s'ha fet submit al formulari
-        # delete!
-        db.session.delete(product)
-        db.session.commit()
+    if current_user.id == product.seller_id:
+        form = DeleteForm()
+        if form.validate_on_submit(): # si s'ha fet submit al formulari
+            # delete!
+            db.session.delete(product)
+            db.session.commit()
 
-        flash("Producte esborrat", "success")
-        return redirect(url_for('main_bp.product_list'))
-    else: # GET
-        return render_template('products/delete.html', form = form, product = product)
+            flash("Producte esborrat", "success")
+            return redirect(url_for('main_bp.product_list'))
+        else: # GET
+            return render_template('products/delete.html', form = form, product = product)
+    else:
+        flash('Error: No es por esborrar productes de terceres persones')
+        return redirect(url_for('main_bp.product_read', product_id = product_id))
+
+
 
 
 __uploads_folder = os.path.join(Config.BASEDIR, Config.IMAGES_UPLOAD_PATH)
