@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,55 +8,56 @@
     <title>{% block title %}Wannapop{% endblock %} - Flaskr</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" />
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Bootstrap core CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- <nav>
-        <h1>Wannapop</h1>
-       
-    </nav> -->
+<body class="bg-light text-dark">
+
+    <header class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Wannapop</a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light" href="/logout">Log Out</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="jumbotron jumbotron-fluid text-white text-center bg-primary">
+        <div class="container">
+            <h1 class="display-4 fw-bolder" style="font-family: 'Roboto', sans-serif;">Vende. Compra. Ahorra</h1>
+            <p class="lead fw-normal mb-0">La mejor aplicación de compraventa online</p>
+        </div>
+    </div> 
 
     <section class="content">
-        <header>
-            {% block header %}
-            
-            <div class="bg-dark py-5">
-                
-                <div class="container px-4 px-lg-5 my-5">
-                    {% if current_user.is_authenticated %}
-                        <a class="btn bg-white btn-outline-dark mt-auto" href="/logout">Log Out</a>
-                    {% endif %}
-                    <div class="text-center text-white">
-                        <h1 class="display-4 fw-bolder">Vende. Compra. Ahorra</h1>
-                        <p class="lead fw-normal text-white-50 mb-0">La mejor aplicación para los tiesos</p>
-                    </div>
-                </div>
-            </div>
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+
+            {% block content %}
+            <!-- Aquí iría el contenido de la sección de productos -->
             {% endblock %}
-        </header>
-
-        {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
-
-        {% block content %}
-        <!-- Aquí iría el contenido de la sección de productos -->
-        {% endblock %}
+        </div>
     </section>
 
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-primary">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copyright; Your Website 2023</p>
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
         </div>
     </footer>
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

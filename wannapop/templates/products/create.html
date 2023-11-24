@@ -3,45 +3,48 @@
 {% block content %}
 
 <div class="container mt-5">
-    <h3>Nou producte</h3>
+    <h3 class="mb-4">Nuevo Producto</h3>
 
     <form action="/products/create" method="POST" enctype="multipart/form-data" class="mt-4">
         {{ form.csrf_token }}
         
-        <div class="form-group">
+        <div class="mb-3">
             {{ form.title.label(class="form-label") }}
-            {{ form.title(class="form-control") }}
+            {{ form.title(class="form-control", placeholder="Nombre del Producto") }}
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             {{ form.description.label(class="form-label") }}
-            {{ form.description(class="form-control") }}
+            {{ form.description(class="form-control", placeholder="Descripción del Producto") }}
         </div>
 
-        <div class="form-group">
-            {{ form.photo_file.label(class="form-label") }}
+        <div class="mb-3">
+            {{ form.photo_file.label(class="form-label d-block") }}
             {{ form.photo_file(class="form-control-file") }}
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             {{ form.price.label(class="form-label") }}
-            {{ form.price(class="form-control") }}
+            {{ form.price(class="form-control", placeholder="Precio del Producto") }}
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             {{ form.category_id.label(class="form-label") }}
             {{ form.category_id(class="form-control") }}
         </div>
 
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary", value="CREAR") }}
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-lg btn-primary", value="Crear Producto") }}
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             {{ render_errors(form) }}
         </div>
     </form>
-    <a href="/products/list" class="btn btn-link">&#x3c;&#x3c; Tornar al llistat de productes</a>
+    
+    <a href="/products/list" class="btn btn-link">
+        <i class="fas fa-arrow-left"></i> Volver al Listado de Productos
+    </a>
 </div>
 
 {% endblock %}

@@ -47,4 +47,7 @@ def logout():
     flash("logged out succesfully")
     return redirect(url_for("auth_bp.login"))
 
-
+@auth_bp.route('/profile')
+@login_required
+def profile():
+    return render_template('users/profile.html', user=current_user)
