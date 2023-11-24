@@ -2,14 +2,18 @@
 {% block content %}
 
 <div class="container mt-5">
-    <h3>Producte {{ product.id }}</h3>
+    <div class="text-center">
+        <h3 class="mb-4">Detalles del Producto {{ product.id }}</h3>
+    </div>
+
     {% if current_user.role != 'moderator' and current_user.id == product.seller_id %}
         <div class="d-flex justify-content-between mb-3">
-            <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar producte</a>
-            <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Esborrar producte</a>
+            <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar Producto</a>
+            <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Eliminar Producto</a>
         </div>
     {% endif %}
-    <div class="card" style="max-width: 540px;">
+
+    <div class="card mb-4 mx-auto" style="max-width: 540px;">
         <div class="row no-gutters">
             <div class="col-md-4">
                 <img src="/static/products/{{ product.photo }}" class="card-img" alt="{{ product.title }}" style="max-height: 180px; object-fit: cover;">
@@ -19,15 +23,15 @@
                     <h5 class="card-title">{{ product.title }}</h5>
                     <p class="card-text">{{ product.description }}</p>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Preu: {{ product.price }}</li>
-                        <li class="list-group-item">Categoria: {{ category.name }}</li>
+                        <li class="list-group-item"><strong>Price:</strong> {{ product.price }}</li>
+                        <li class="list-group-item"><strong>Category:</strong> {{ category.name }}</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="/products/list" class="btn btn-link mt-3">&#x3c;&#x3c; Tornar al llistat de productes</a>
+    <a href="/products/list" class="btn btn-link mt-3"><i class="fas fa-arrow-left"></i> Volver al Listado de Productos</a>
 </div>
 
 {% endblock %}

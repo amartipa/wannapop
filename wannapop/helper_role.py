@@ -56,6 +56,7 @@ def on_identity_loaded(sender, identity):
         elif current_user.role == Role.moderator:
             # Role needs
             identity.provides.add(__moderator_role_need)
+            identity.provides.add(__delete_action_need)
             # Action needs
             identity.provides.add(__view_action_need)
         elif current_user.role == Role.wanner:

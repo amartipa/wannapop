@@ -9,6 +9,11 @@ from . import db_manager as db
 import uuid
 import os
 from config import Config
+import secrets
+from . import mail_manager as mail
+
+
+
 
 # Blueprint
 main_bp = Blueprint(
@@ -27,23 +32,52 @@ def wannapop_register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        token = secrets.token_urlsafe(20)
         # Crea un nuevo objeto de usuario
         new_user = User(
             name=form.name.data, 
             email=form.email.data, 
             password=generate_password_hash(form.password.data),  # Aplica hash a la contraseña
-            role='wanner'
+            role='wanner',
+            email_token=token,
+            verified=0
         )
 
         # Agrega el nuevo usuario a la base de datos
         db.session.add(new_user)
         db.session.commit()
+        msg = f"""
+                URL: http://127.0.0.1:5000/verify/{new_user.name}/{token}
+        """
+        mail.send_contact_msg( msg, new_user.name, new_user.email)
+
 
         flash("Nou usuari creat", "success")
-        return redirect(url_for('main_bp.product_list'))
+        return redirect(url_for('auth_bp.login'))
     else:
-        flash('Error al crear usuari')
+        # flash('Error al crear usuari', "error") se queda comentado por que al entrar en la pestaña de register salta el mensaje flash ants de rellenar el formulario
         return render_template('/users/register.html', form=form)
+    
+
+@main_bp.route('/verify/<name>/<email_token>')
+def verify(name, email_token):
+    user = User.query.filter_by(name=name, email_token=email_token).first()
+        
+    if user:
+        if user.verified == 0:
+            # Actualizar el estado de verificado y limpiar el token
+            user.verified = 1
+            user.email_token = None
+            db.session.commit()
+            flash("Tu cuenta ha sido verificada con éxito.", "success")
+            return redirect(url_for('auth_bp.login'))
+        else:
+            flash("Esta cuenta ya ha sido verificada.", "info")
+            return redirect(url_for('auth_bp.login'))
+    else:
+        # Manejo de error si no se encuentra el usuario o el token no coincide
+        flash("Enlace de verificación inválido o caducado.", "error")
+        return redirect(url_for('main_bp.index'))
 
     
 @main_bp.route('/products/list')
@@ -158,8 +192,8 @@ def product_delete(product_id):
 
 
 
-__uploads_folder = os.path.join(Config.BASEDIR, Config.IMAGES_UPLOAD_PATH)
-
+# __uploads_folder = os.path.join(Config.BASEDIR, Config.IMAGES_UPLOAD_PATH)
+__uploads_folder = current_app.config.get("UPLOADS_FOLDER")
 def __manage_photo_file(photo_file):
     # si hi ha fitxer
     if photo_file.data:
@@ -173,3 +207,4 @@ def __manage_photo_file(photo_file):
             return unique_filename
 
     return None
+

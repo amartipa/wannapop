@@ -29,4 +29,8 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
     updated = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
+    email_token = db.Column(db.String(20))
+    verified = db.Column(db.Integer, default=0, nullable=False)
+
+
 
