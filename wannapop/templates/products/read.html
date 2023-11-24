@@ -10,6 +10,8 @@
         <div class="d-flex justify-content-between mb-3">
             <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar Producto</a>
             <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Eliminar Producto</a>
+            <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar Producto</a>
+            <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Eliminar Producto</a>
         </div>
     {% endif %}
 
@@ -25,12 +27,15 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Price:</strong> {{ product.price }}</li>
                         <li class="list-group-item"><strong>Category:</strong> {{ category.name }}</li>
+                        <li class="list-group-item"><strong>Price:</strong> {{ product.price }}</li>
+                        <li class="list-group-item"><strong>Category:</strong> {{ category.name }}</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
+    <a href="/products/list" class="btn btn-link mt-3"><i class="fas fa-arrow-left"></i> Volver al Listado de Productos</a>
     <a href="/products/list" class="btn btn-link mt-3"><i class="fas fa-arrow-left"></i> Volver al Listado de Productos</a>
 </div>
 
