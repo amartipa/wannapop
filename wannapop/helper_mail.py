@@ -36,6 +36,8 @@ class MailManager:
             content = content
         )
 
+   
+
     # https://realpython.com/python-send-email/#option-2-using-starttls
     def __send_mail(self, dst_name, dst_addr, subject, content):
         context = ssl.create_default_context()

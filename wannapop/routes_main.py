@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, current_app
+from flask import Blueprint, render_template, redirect, url_for, flash, current_app, request
 from flask_login import current_user, login_required
 from .models import Product, Category, User
 from .forms import ProductForm, DeleteForm, RegisterForm, LoginForm
@@ -78,6 +78,37 @@ def verify(name, email_token):
         # Manejo de error si no se encuentra el usuario o el token no coincide
         flash("Enlace de verificación inválido o caducado.", "error")
         return redirect(url_for('main_bp.index'))
+    
+
+@main_bp.route('/profile', methods=['GET', 'POST'])
+@login_required
+def update_profile():
+    if request.method == 'POST':
+        current_user.name = request.form['name']
+        new_email = request.form['email']
+
+        if new_email != current_user.email:
+            current_user.email = new_email
+            current_user.verified = 0  # Marcar com a no verificat
+            new_token = secrets.token_urlsafe(20)
+            current_user.email_token = new_token
+            db.session.commit()
+            msg = f"""
+            Hola {current_user.name},
+
+            El correu Ha sigut actualitzat. clicka al link per verificar els canvis.
+                URL: http://127.0.0.1:5000/verify/{current_user.name}/{new_token}
+            """
+            mail.send_contact_msg( msg, current_user.name, new_email)
+            flash('Perfil actualitzat. Un nou correu de verificació ha estat enviat.', 'success')
+        else:
+            db.session.commit()
+            flash('Perfil actualitzat.', 'success')
+
+        return redirect(url_for('main_bp.update_profile'))
+
+    return render_template('users/profile.html', user=current_user)
+
 
     
 @main_bp.route('/products/list')
