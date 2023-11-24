@@ -3,11 +3,12 @@
 
 <div class="container mt-5">
     <h3>Producte {{ product.id }}</h3>
-    <div class="d-flex justify-content-between mb-3">
-        <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar producte</a>
-        <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Esborrar producte</a>
-    </div>
-
+    {% if current_user.role != 'moderator' and current_user.id == product.seller_id %}
+        <div class="d-flex justify-content-between mb-3">
+            <a href="/products/update/{{ product.id }}" class="btn btn-primary">Modificar producte</a>
+            <a href="/products/delete/{{ product.id }}" class="btn btn-danger">Esborrar producte</a>
+        </div>
+    {% endif %}
     <div class="card" style="max-width: 540px;">
         <div class="row no-gutters">
             <div class="col-md-4">

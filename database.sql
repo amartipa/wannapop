@@ -15,6 +15,7 @@ CREATE TABLE users (
 	name TEXT UNIQUE,
 	email TEXT UNIQUE,
 	password TEXT,
+	role TEXT,
 	created DATETIME NOT NULL DEFAULT (DATETIME('now')),
 	updated DATETIME NOT NULL DEFAULT (DATETIME('now'))
 
@@ -65,10 +66,10 @@ UPDATE SQLITE_SEQUENCE SET seq = 3 WHERE name = 'categories';
 
 
 -- Inserir dades fictícies a la taula users
-INSERT INTO users (id, name, email, password) VALUES
-(1, 'Joan Pérez', 'joan@example.com', 'contrasenya1'),
-(2, 'Anna García', 'anna@example.com', 'contrasenya2'),
-(3, 'Elia Rodríguez', 'elia@example.com', 'contrasenya3');
+INSERT INTO users (id, name, email, password, role) VALUES
+(1, 'Joan Pérez', 'joan@example.com', 'contrasenya1', 'wanner'),
+(2, 'Anna García', 'anna@example.com', 'contrasenya2', 'wanner'),
+(3, 'Elia Rodríguez', 'elia@example.com', 'contrasenya3','wanner');
 UPDATE SQLITE_SEQUENCE SET seq = 3 WHERE name = 'users';
 
 -- Inserir dades fictícies a la taula products
