@@ -10,7 +10,7 @@ import uuid
 import os
 from config import Config
 import secrets
-from . import mail_manager as mail
+from . import mail_manager as mail, logger
 
 
 
@@ -32,6 +32,12 @@ def wannapop_register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        # Verifica si ya existe un usuario con el mismo email
+        existing_user = User.query.filter_by(email=form.email.data).first()
+        if existing_user:
+            flash("Ya existe un usuario con este correo electrónico", "error")
+            return redirect(url_for('main_bp.wannapop_register'))
+
         token = secrets.token_urlsafe(20)
         # Crea un nuevo objeto de usuario
         new_user = User(
@@ -50,7 +56,6 @@ def wannapop_register():
                 URL: http://127.0.0.1:5000/verify/{new_user.name}/{token}
         """
         mail.send_contact_msg( msg, new_user.name, new_user.email)
-
 
         flash("Nou usuari creat", "success")
         return redirect(url_for('auth_bp.login'))
@@ -117,6 +122,8 @@ def update_profile():
 def product_list():
     # select amb join que retorna una llista dwe resultats
     products_with_category = db.session.query(Product, Category).join(Category).order_by(Product.id.asc()).all()
+
+    logger.debug(f"Products_with_categoy = {products_with_category}")
     
     return render_template('products/list.html', products_with_category = products_with_category)
 

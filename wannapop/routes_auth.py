@@ -9,6 +9,7 @@ from . import db_manager as db
 from werkzeug.security import check_password_hash
 import secrets
 from . import mail_manager as mail
+from . import db_manager as db, logger
 
 # Blueprint
 auth_bp = Blueprint(
@@ -23,18 +24,22 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
+        logger.debug(f"Usuari {form.username.data} intenta autenticar-se")
         user = User.query.filter_by(name=form.username.data).first()
         if user and check_password_hash(user.password, form.password.data):
             if user.verified == 1:
                 login_user(user)
                 flash('Login successful!')
                 notify_identity_changed()
+                logger.debug(f"Usuari {current_user.name} s'ha autenticat correctament")
                 return redirect(url_for('main_bp.product_list'))
             else:
                 flash('El teu compte no está verificat, ves al teu correu per verificar-lo', 'warning')
+                logger.warning(f"Usuari {form.username.data} no ha verificat el seu correu")
                 return redirect(url_for("auth_bp.login"))
         else:
             flash('Correu o contraseña no valids')
+            logger.warning(f"Usuari {form.username.data} no s'ha autenticat correctament")
             return redirect(url_for("auth_bp.login"))
 
     return render_template('users/login.html', form=form)
