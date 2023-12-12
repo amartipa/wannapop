@@ -24,6 +24,7 @@ def create_app():
 
     # Configura la aplicación con la clase Config de config.py
     app.config.from_object("config.Config")
+    app.logger.debug(app.config)
     
     # Inicialitza els plugins
     login_manager.init_app(app)
