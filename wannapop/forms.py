@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, DecimalField, SubmitField, SelectField, FileField
+from wtforms import PasswordField, StringField, DecimalField, SubmitField, SelectField, FileField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange, InputRequired, Email
 import decimal
 
@@ -44,3 +44,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
+class BlockUserForm(FlaskForm):
+    message = TextAreaField('Explique el motivo del bloqueo:', validators=[DataRequired()])
+    submit = SubmitField('Bloquear Usuario')

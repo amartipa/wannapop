@@ -7,12 +7,19 @@
         <th>ID</th>
         <th>NOM</th>
         <th>ROL</th>
+        <th>MODERAR</th>
     </tr>
     {% for user in users %}
     <tr>
         <td>{{ user.id }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
+        <td><a href="/admin/users/{{user.id}}/block"><i class="fa-solid fa-ban" style="color: #ff0000;"></i></a></td>
+        <td><form action="{{ url_for('admin_bp.unblock_user', user_id=user.id) }}" method="post">
+            <button type="submit">Desbloquear</button>
+        </form>
+        </td>
+        
     </tr>
     {% endfor %}
 </table>

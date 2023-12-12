@@ -32,5 +32,11 @@ class User(UserMixin, db.Model):
     email_token = db.Column(db.String(20))
     verified = db.Column(db.Integer, default=0, nullable=False)
 
+class BlockedUser(db.Model):
+    __tablename__ = "blocked_users"
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    message = db.Column(db.String, nullable=False)
+    created = db.Column(db.DateTime, server_default=func.now())
+
 
 
