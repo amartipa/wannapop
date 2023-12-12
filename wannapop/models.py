@@ -1,5 +1,6 @@
 from . import db_manager as db
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 
 class Product(db.Model):
@@ -31,6 +32,7 @@ class User(UserMixin, db.Model):
     updated = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
     email_token = db.Column(db.String(20))
     verified = db.Column(db.Integer, default=0, nullable=False)
+    blocked = relationship("BlockedUser", backref="user", uselist=False)
 
 class BlockedUser(db.Model):
     __tablename__ = "blocked_users"

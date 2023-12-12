@@ -131,7 +131,9 @@ def product_list():
 @login_required
 @require_create_permission.require(http_exception=403)
 def product_create(): 
-
+    if current_user.blocked:
+        flash('No puedes crear productos porque estás bloqueado.', 'error')
+        return redirect(url_for('main_bp.product_list'))
     # select que retorna una llista de resultats
     categories = db.session.query(Category).order_by(Category.id.asc()).all()
 

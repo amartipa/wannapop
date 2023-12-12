@@ -6,6 +6,11 @@
 <body class="bg-light">
     <div class="container mt-5">
         <h1 class="h3 mb-3 font-weight-normal">User Profile</h1>
+        {% if user.blocked %}
+            <div class="alert alert-danger" role="alert">
+                Este usuario está bloqueado por la siguiente razón: {{ user.blocked.message }}
+            </div>
+        {% endif %}
 
         <form action="{{ url_for('main_bp.update_profile') }}" method="post">
             <div class="mb-3">
