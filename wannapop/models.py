@@ -45,7 +45,7 @@ class BlockedUser(db.Model):
 class BannedProduct(db.Model):
     __tablename__ = "banned_products"
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), primary_key=True)
-    mensaje = db.Column(db.String, nullable=False)
+    reason = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
 
 

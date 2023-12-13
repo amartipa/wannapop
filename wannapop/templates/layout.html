@@ -50,6 +50,10 @@
         </div>
         {% if current_user.role == 'admin' %}
 	        <a href="/admin" class="btn btn-success mb-4 mt-3">ADMIN HOME</a>
+            <a href="/profile" class="btn btn-success mb-4 mt-3">PROFILE</a>
+        {% elif current_user.role =='moderator' %}
+            <a href="/profile" class="btn btn-success mb-4 mt-3">PROFILE</a>
+            <a href="/admin" class="btn btn-success mb-4 mt-3">ADMIN HOME</a>
         {% else %}
             <a href="/profile" class="btn btn-success mb-4 mt-3">PROFILE</a>
         {% endif %}

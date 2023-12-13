@@ -90,7 +90,7 @@ def ban_products(product_id):
         return redirect(url_for('admin_bp.admin_products'))
 
     if form.validate_on_submit():
-        ban_product = BannedProduct(product_id=product_id, mensaje=form.mensaje.data, created=datetime.now())
+        ban_product = BannedProduct(product_id=product_id, reason=form.reason.data, created=datetime.now())
         db.session.add(ban_product)
         db.session.commit()
 

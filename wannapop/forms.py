@@ -49,5 +49,5 @@ class BlockUserForm(FlaskForm):
     submit = SubmitField('Bloquear Usuario')
 
 class BanProductForm(FlaskForm):
-    mensaje = TextAreaField('Explique el motivo del bloqueo:', validators=[DataRequired()])
+    reason = TextAreaField('Explique el motivo del bloqueo:', validators=[DataRequired()])
     submit = SubmitField('Bloquear Producto')

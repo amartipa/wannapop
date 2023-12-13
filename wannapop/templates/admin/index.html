@@ -6,9 +6,8 @@
 <h2>Restricted area</h2>
 {% if current_user.role == 'admin' %}
   <a href="/admin/users">Mostrar usuaris</a>
+{% elif current_user.role == 'moderator' %}
   <a href="/admin/products">Mostrar productes</a>
-
 {% endif %}
-
 
 {% endblock %}
