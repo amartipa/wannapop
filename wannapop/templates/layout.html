@@ -48,6 +48,11 @@
             <h1 class="display-4 fw-bolder" style="font-family: 'Roboto', sans-serif;">Vende. Compra. Ahorra</h1>
             <p class="lead fw-normal mb-0">La mejor aplicación de compraventa online</p>
         </div>
+        {% if current_user.role == 'admin' %}
+	        <a href="/admin" class="btn btn-success mb-4 mt-3">ADMIN HOME</a>
+        {% else %}
+            <a href="/profile" class="btn btn-success mb-4 mt-3">PROFILE</a>
+        {% endif %}
     </div> 
 
     <section class="content">
@@ -65,7 +70,6 @@
     <footer class="py-5 bg-primary">
     <footer class="py-5 bg-primary">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
             <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
         </div>
     </footer>

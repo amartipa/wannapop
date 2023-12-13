@@ -25,3 +25,8 @@ class Config:
     EXTERNAL_URL = environ.get('EXTERNAL_URL')
 
     DEBUG = environ.get('DEBUG', False)
+    DEBUG_TB_INTERCEPT_REDIRECTS = environ.get('DEBUG_TB_INTERCEPT_REDIRECTS', False)
+
+    LOG_LEVEL = environ.get('LOG_LEVEL', 'DEBUG').upper()
+	
+    
