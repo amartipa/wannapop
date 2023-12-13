@@ -2,6 +2,11 @@
 {% block content %}
 
 <div class="container mt-5">
+    {% if product.banned %}
+        <div class="alert alert-danger" role="alert">
+            Este producto está bloqueado por la siguiente razón: {{ product.banned.mensaje }}
+        </div>
+    {% endif %}
     <div class="text-center">
         <h3 class="mb-4">Detalles del Producto {{ product.id }}</h3>
     </div>

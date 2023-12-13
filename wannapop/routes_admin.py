@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, flash, url_for
 from flask_login import current_user, login_required
-from .models import User, BlockedUser
-from .helper_role import require_admin_role, require_admin_or_moderator_role
+from .models import User, BlockedUser, Product, BannedProduct
+from .helper_role import require_admin_role, require_admin_or_moderator_role, require_moderator_role
 from . import db_manager as db
 from datetime import datetime
-from .forms import BlockUserForm
+from .forms import BlockUserForm, BanProductForm
 
 # Blueprint
 admin_bp = Blueprint(
@@ -65,6 +65,53 @@ def unblock_user(user_id):
 
     return redirect(url_for('admin_bp.admin_users'))
  
+@admin_bp.route('/admin/products')
+@login_required
+@require_moderator_role.require(http_exception=403)
+def admin_products():
+    products = db.session.query(Product).all()
+    banned_product = BannedProduct.query.with_entities(BannedProduct.product_id).all()
+    banned_products_id = {bp.product_id for bp in banned_product}
+    return render_template('admin/products_list.html', products=products,banned_products_id = banned_products_id)
+
+@admin_bp.route('/admin/products/<int:product_id>/ban', methods=['POST', 'GET'])
+@login_required
+@require_moderator_role.require(http_exception=403)
+def ban_products(product_id):
+    product = db.session.query(Product).filter(Product.id == product_id).one()
+    form = BanProductForm()
+
+    already_ban = BannedProduct.query.filter_by(product_id=product_id).first()
+
+    if already_ban:
+        flash('Este producto ya está bloqueado.', 'error')
+        return redirect(url_for('admin_bp.admin_products'))
+
+    if form.validate_on_submit():
+        ban_product = BannedProduct(product_id=product_id, mensaje=form.mensaje.data, created=datetime.now())
+        db.session.add(ban_product)
+        db.session.commit()
+
+        flash('El producto ha sido bloqueado con éxito', 'success')
+        return redirect(url_for('admin_bp.admin_products'))
+
+    
+    return render_template('ban.html', form=form, product=product)
+               
+@admin_bp.route('/admin/products/<int:product_id>/unban', methods=['POST'])
+@login_required
+@require_moderator_role.require(http_exception=403)
+def unban_product(product_id):
+    ban_product = BannedProduct.query.filter_by(product_id=product_id).first()
+
+    if ban_product:
+        db.session.delete(ban_product)
+        db.session.commit()
+        flash('El producto ha sido desbloqueado con éxito', 'success')
+    else:
+        flash('Este usuario no está bloqueado', 'error')
+
+    return redirect(url_for('admin_bp.admin_products'))
 
         
     

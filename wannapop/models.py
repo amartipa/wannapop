@@ -14,6 +14,8 @@ class Product(db.Model):
     seller_id = db.Column(db.Integer) #db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
     updated = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
+    banned = relationship("BannedProduct", backref="product", uselist=False)
+
 
 class Category(db.Model):
     __tablename__ = "categories"
@@ -40,5 +42,10 @@ class BlockedUser(db.Model):
     message = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
 
+class BannedProduct(db.Model):
+    __tablename__ = "banned_products"
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), primary_key=True)
+    mensaje = db.Column(db.String, nullable=False)
+    created = db.Column(db.DateTime, server_default=func.now())
 
 

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Gestion de bloqueo del usuario {{ product.title }}</h2>
+<form action="/admin/products/{{ product.id }}/ban" method="post">
+    {{ form.hidden_tag() }}
+    <label for="mensaje">{{ form.mensaje.label }}</label><br>
+    {{ form.mensaje(cols="30", rows="10") }}<br>
+    {{ form.submit() }}
+</form>
+{% endblock %}

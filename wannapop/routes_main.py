@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, current_app, request
 from flask_login import current_user, login_required
-from .models import Product, Category, User
+from .models import Product, Category, User, BannedProduct
 from .forms import ProductForm, DeleteForm, RegisterForm, LoginForm
 from .helper_role import require_view_permission, require_edit_permission, require_create_permission, require_delete_permission
 from werkzeug.utils import secure_filename
@@ -125,7 +125,10 @@ def product_list():
 
     logger.debug(f"Products_with_categoy = {products_with_category}")
     
-    return render_template('products/list.html', products_with_category = products_with_category)
+    banned_product = BannedProduct.query.with_entities(BannedProduct.product_id).all()
+    banned_products_id = {bp.product_id for bp in banned_product}
+
+    return render_template('products/list.html', products_with_category = products_with_category, banned_products_id = banned_products_id)
 
 @main_bp.route('/products/create', methods = ['POST', 'GET'])
 @login_required
