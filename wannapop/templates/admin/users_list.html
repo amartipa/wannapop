@@ -12,14 +12,17 @@
     {% for user in users %}
     <tr>
         <td>{{ user.id }}</td>
-        <td>{{ user.email }}</td>
+        <td>{{ user.name }}</td>
         <td>{{ user.role }}</td>
-        <td><a href="/admin/users/{{user.id}}/block"><i class="fa-solid fa-ban" style="color: #ff0000;"></i></a></td>
-        <td><form action="{{ url_for('admin_bp.unblock_user', user_id=user.id) }}" method="post">
-            <button type="submit">Desbloquear</button>
-        </form>
-        </td>
-        
+       
+        {% if user.id in blocked_user_ids %}
+            <td><form action="{{ url_for('admin_bp.unblock_user', user_id=user.id) }}" method="post">
+                <button type="submit">Desbloquear</button>
+            </form>
+            </td>
+        {% else %}
+            <td><a href="/admin/users/{{user.id}}/block"><i class="fa-solid fa-ban" style="color: #ff0000;"></i></a></td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>

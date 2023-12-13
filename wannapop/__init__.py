@@ -7,6 +7,8 @@ from .helper_mail import MailManager
 from werkzeug.local import LocalProxy
 from flask import current_app
 from flask_debugtoolbar import DebugToolbarExtension
+from logging.handlers import RotatingFileHandler
+import logging
 
 # https://stackoverflow.com/a/31764294
 logger = LocalProxy(lambda: current_app.logger)
@@ -24,7 +26,7 @@ def create_app():
 
     # Configura la aplicación con la clase Config de config.py
     app.config.from_object("config.Config")
-    app.logger.debug(app.config)
+    
     
     # Inicialitza els plugins
     login_manager.init_app(app)
@@ -32,6 +34,24 @@ def create_app():
     principal_manager.init_app(app)
     mail_manager.init_app(app)
     toolbar.init_app(app) # the toolbar is only enabled in debug mode
+
+    #gestion de logs
+    log_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=3)
+    log_handler.setFormatter(logging.Formatter(
+   '%(asctime)s %(levelname)s: %(message)s '
+   '[in %(pathname)s:%(lineno)d]'
+    ))
+    log_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(log_handler)
+
+    
+
+    log_level = app.config.get('LOG_LEVEL')
+    if log_level not in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']:
+        raise ValueError('Nivell de registre no vàlid')
+    app.logger.setLevel(getattr(logging, log_level))
+
+
 
     with app.app_context():
         from . import routes_main, routes_auth, routes_admin

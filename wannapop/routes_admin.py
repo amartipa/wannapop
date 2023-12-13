@@ -23,7 +23,9 @@ def admin_index():
 @require_admin_role.require(http_exception=403)
 def admin_users():
     users = db.session.query(User).all()
-    return render_template('admin/users_list.html', users=users)
+    blocked_users = BlockedUser.query.with_entities(BlockedUser.user_id).all()
+    blocked_user_ids = {bu.user_id for bu in blocked_users}
+    return render_template('admin/users_list.html', users=users, blocked_user_ids=blocked_user_ids)
 
 @admin_bp.route('/admin/users/<int:user_id>/block', methods=['POST', 'GET'])
 @login_required
