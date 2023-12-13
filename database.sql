@@ -53,12 +53,18 @@ CREATE TABLE confirmed_orders (
     FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
--- Crear la tabla blocked_users
 CREATE TABLE blocked_users (
-    user_id INTEGER PRIMARY KEY,
-    message TEXT NOT NULL,
-    created DATETIME NOT NULL DEFAULT (DATETIME('now')),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+	user_id INTEGER PRIMARY KEY,
+message TEXT,
+	created DATETIME NOT NULL DEFAULT (DATETIME('now')),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE banned_products (
+	product_id INTEGER PRIMARY KEY,
+reason TEXT,
+	created DATETIME NOT NULL DEFAULT (DATETIME('now')),
+	FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 -- Dades FAKE
