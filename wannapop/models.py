@@ -38,8 +38,7 @@ class User(db.Model,UserMixin , BaseMixin, SerializableMixin):
     blocked = relationship("BlockedUser", backref="user", uselist=False)
      # Class variable from SerializableMixin
     exclude_attr = ['password']
-    def get_id(self):
-        return self.email
+
 
 class BlockedUser(db.Model , BaseMixin, SerializableMixin):
     __tablename__ = "blocked_users"
