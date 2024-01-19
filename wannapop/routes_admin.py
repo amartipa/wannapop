@@ -43,8 +43,7 @@ def block_users(user_id):
     if form.validate_on_submit():
         # Crear un nuevo usuario bloqueado
         blocked_user = BlockedUser(user_id=user.id, message=form.message.data, created=datetime.now())
-        db.session.add(blocked_user)
-        db.session.commit()
+        blocked_user.save()
 
         flash('El usuario ha sido bloqueado con éxito', 'success')
         return redirect(url_for('admin_bp.admin_users'))
@@ -59,8 +58,7 @@ def unblock_user(user_id):
     blocked_user = BlockedUser.query.filter_by(user_id=user_id).first()
 
     if blocked_user:
-        db.session.delete(blocked_user)
-        db.session.commit()
+        blocked_user.delete()
         flash('El usuario ha sido desbloqueado con éxito', 'success')
     else:
         flash('Este usuario no está bloqueado', 'error')
@@ -91,8 +89,7 @@ def ban_products(product_id):
 
     if form.validate_on_submit():
         ban_product = BannedProduct(product_id=product_id, reason=form.reason.data, created=datetime.now())
-        db.session.add(ban_product)
-        db.session.commit()
+        ban_product.save()
 
         flash('El producto ha sido bloqueado con éxito', 'success')
         return redirect(url_for('admin_bp.admin_products'))
@@ -107,8 +104,7 @@ def unban_product(product_id):
     ban_product = BannedProduct.query.filter_by(product_id=product_id).first()
 
     if ban_product:
-        db.session.delete(ban_product)
-        db.session.commit()
+        ban_product.delete()
         flash('El producto ha sido desbloqueado con éxito', 'success')
     else:
         flash('Este usuario no está bloqueado', 'error')
