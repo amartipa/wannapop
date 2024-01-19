@@ -39,6 +39,7 @@ class User(db.Model,UserMixin , BaseMixin, SerializableMixin):
      # Class variable from SerializableMixin
     exclude_attr = ['password']
 
+
 class BlockedUser(db.Model , BaseMixin, SerializableMixin):
     __tablename__ = "blocked_users"
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)

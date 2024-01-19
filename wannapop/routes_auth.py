@@ -25,7 +25,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         logger.debug(f"Usuari {form.username.data} intenta autenticar-se")
-        user = User.query.filter_by(name=form.username.data).first()
+        user = User.get_filtered_by(name=form.username.data)
         if user and check_password_hash(user.password, form.password.data):
             if user.verified == 1:
                 login_user(user)
@@ -51,13 +51,13 @@ def resend_verification_email():
 
     if request.method == 'POST':
         email = request.form.get('email')
-        user = User.query.filter_by(email=email).first()
+        user = User.get_filtered_by(email=email)
 
         if user and not user.verified:
             # Genera un nou token i envia el correu
             new_token = secrets.token_urlsafe(20)
             user.email_token = new_token
-            db.session.commit()
+            user.save()
     
             msg = f"""
                 URL: http://127.0.0.1:5000/verify/{user.name}/{new_token}
