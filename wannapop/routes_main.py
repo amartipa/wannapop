@@ -213,7 +213,7 @@ def product_update(product_id):
 @require_delete_permission.require(http_exception=403)
 def product_delete(product_id):
     # select amb 1 resultat
-    product = db.session.query(Product).filter(Product.id == product_id).one()
+    product = Product.get(product_id)
 
     if current_user.id == product.seller_id:
         form = DeleteForm()
