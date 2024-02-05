@@ -57,17 +57,17 @@ class BaseMixin():
     @classmethod
     def get_filtered_by(cls, **kwargs):
         return cls.db_query().filter_by(**kwargs).one_or_none()
-        return cls.db_query().filter_by(**kwargs).one_or_none()
+       
 
     @classmethod
     def get_all_filtered_by(cls, **kwargs):
         return cls.db_query().filter_by(**kwargs).order_by(cls.id.asc()).all()
-        return cls.db_query().filter_by(**kwargs).order_by(cls.id.asc()).all()
+       
 
     @classmethod
     def get_with(cls, id, join_cls):
         return cls.db_query_with(join_cls).filter(cls.id == id).one_or_none()
-        return cls.db_query_with(join_cls).filter(cls.id == id).one_or_none()
+      
 
     @classmethod
     def get_all_with(cls, join_cls):

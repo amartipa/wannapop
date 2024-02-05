@@ -74,3 +74,9 @@ class ConfirmedOrder(db.Model, BaseMixin, SerializableMixin):
 
     # Relationship
     order = relationship("Order", backref="confirmed_order", uselist=False)
+
+class Status(db.Model, BaseMixin, SerializableMixin):
+    __tablename__ = "statuses"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+    slug = db.Column(db.String, unique=True, nullable=False)
