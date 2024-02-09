@@ -83,6 +83,11 @@ class BaseMixin():
     def get_filtered(cls):
         return db.session.query(cls).filter(cls.id == id).one_or_none()
     
+    @classmethod
+    def filter_by_title(cls, search):
+        my_filter = cls.title.like('%' + search + '%')
+        return cls.db_query().filter(my_filter).order_by(cls.title.asc())
+    
 from collections import OrderedDict
 from sqlalchemy.engine.row import Row
 
