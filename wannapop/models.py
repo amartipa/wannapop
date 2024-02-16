@@ -3,6 +3,9 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 from .mixins import BaseMixin, SerializableMixin
+from datetime import timedelta, timezone, datetime
+import secrets
+
 
 class Product(db.Model, BaseMixin, SerializableMixin):
     __tablename__ = "products"
@@ -24,11 +27,11 @@ class Category(db.Model, BaseMixin, SerializableMixin):
     name = db.Column(db.String, nullable=False)
     slug = db.Column(db.String, nullable=False)
 
-class User(db.Model,UserMixin , BaseMixin, SerializableMixin):
+class User(db.Model, UserMixin, BaseMixin, SerializableMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, unique=True)
-    email =db. Column(db.String, unique=True)
+    email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     role = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, server_default=func.now())
@@ -36,11 +39,36 @@ class User(db.Model,UserMixin , BaseMixin, SerializableMixin):
     email_token = db.Column(db.String(20))
     verified = db.Column(db.Integer, default=0, nullable=False)
     blocked = relationship("BlockedUser", backref="user", uselist=False)
-     # Class variable from SerializableMixin
+    token = db.Column(db.String(255))
+    token_expiration = db.Column(db.DateTime)
+    # exclude_attr = ['password', 'token', 'token_expiration']
     exclude_attr = ['password']
 
+    def get_token(self, expires_in=3600):
+        now = datetime.now(timezone.utc)
+        if self.token and self.token_expiration.replace(
+                tzinfo=timezone.utc) > now + timedelta(seconds=60):
+            return self.token
+        self.token = secrets.token_hex(16)
+        self.token_expiration = now + timedelta(seconds=expires_in)
+        self.save()
+        return self.token
 
-class BlockedUser(db.Model , BaseMixin, SerializableMixin):
+    def revoke_token(self):
+        self.token_expiration = datetime.now(timezone.utc) - timedelta(
+            seconds=1)
+        self.save()
+    
+    @staticmethod
+    def check_token(token):
+        user = User.get_filtered_by(token=token)
+        if user is None or user.token_expiration.replace(
+                tzinfo=timezone.utc) < datetime.now(timezone.utc):
+            return None
+        return user
+
+
+class BlockedUser(db.Model, BaseMixin, SerializableMixin):
     __tablename__ = "blocked_users"
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     message = db.Column(db.String, nullable=False)
