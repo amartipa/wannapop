@@ -1,0 +1,1031 @@
+{
+	"info": {
+		"_postman_id": "9f8ee6cd-8f05-4e75-ac6a-b526724669f2",
+		"name": "Flask api buena",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32450161",
+		"_collection_link": "https://martian-crescent-116986.postman.co/workspace/Team-Workspace~e91e9df1-80bf-41b6-8feb-edf934366baf/collection/32449867-9f8ee6cd-8f05-4e75-ac6a-b526724669f2?action=share&source=collection_link&creator=32450161"
+	},
+	"item": [
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 4,\r\n    \"buyer_id\": 4,\r\n    \"offer\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_ENDPOINT}}/api/{{API_VERSION}}/orders",
+							"host": [
+								"{{URL_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"{{API_VERSION}}",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create order BadRequest",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 4,\r\n    \"buyer_id\": 4,\r\n    \"offer\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_ENDPOINT}}/api/{{API_VERSION}}/orders",
+							"host": [
+								"{{URL_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"{{API_VERSION}}",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 4,\r\n    \"buyer_id\": 4,\r\n    \"offer\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_ENDPOINT}}/api/{{API_VERSION}}/orders/1",
+							"host": [
+								"{{URL_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"{{API_VERSION}}",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order BadRequest",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 4,\r\n    \"buyer_id\": 4,\r\n    \"offer\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_ENDPOINT}}/api/{{API_VERSION}}/orders/1",
+							"host": [
+								"{{URL_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"{{API_VERSION}}",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 4,\r\n    \"buyer_id\": 4,\r\n    \"offer\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_ENDPOINT}}/api/{{API_VERSION}}/orders/1",
+							"host": [
+								"{{URL_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"{{API_VERSION}}",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/orders/7/confirmed",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"orders",
+								"7",
+								"confirmed"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Confirm Orders",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"order_id\" : \"2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ENDPOINT}}/orders/2/confirmed",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"orders",
+										"2",
+										"confirmed"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 18:42:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"message\": \"Order 2 confirmed successfully\"\n    },\n    \"success\": true\n}"
+						},
+						{
+							"name": "Confirm Orders",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ENDPOINT}}/orders/7/confirmed",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"orders",
+										"7",
+										"confirmed"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.3.7 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 16 Feb 2024 18:05:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order 7 confirmed successfully\",\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/orders/7/confirmed",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"orders",
+								"7",
+								"confirmed"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/orders/2/confirmed",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"orders",
+										"2",
+										"confirmed"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 18:52:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "95"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"message\": \"ConfirmedOrder 2 canceled successfully\"\n    },\n    \"success\": true\n}"
+						},
+						{
+							"name": "Delete Orders",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/orders/7/confirmed",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"orders",
+										"7",
+										"confirmed"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.3.7 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 16 Feb 2024 18:08:10 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"ConfirmedOrder 7 cancelled successfully\",\n    \"success\": true\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Update Product",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Izan\",\r\n    \"description\" : \"Izan\",\r\n    \"photo\" : \"image-4.png\",\r\n    \"price\" : \"44.00\",\r\n    \"category_id\" : \"1\",\r\n    \"seller_id\" : \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/products/16",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"products",
+								"16"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\" : \"Izan\",\r\n    \"description\" : \"Izan\",\r\n    \"photo\" : \"image-4.png\",\r\n    \"price\" : \"38.00\",\r\n    \"category_id\" : \"1\",\r\n    \"seller_id\" : \"5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ENDPOINT}}/products/7",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"products",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 15:58:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "287"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category_id\": 1,\n        \"created\": \"Sat, 15 Apr 2023 07:10:24 GMT\",\n        \"description\": \"Izan\",\n        \"id\": 7,\n        \"photo\": \"image-4.png\",\n        \"price\": \"36.00\",\n        \"seller_id\": 5,\n        \"title\": \"Izan\",\n        \"updated\": \"Fri, 02 Feb 2024 15:58:50 GMT\"\n    },\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "List Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/products?title=Gembucket",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Gembucket"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/products?title=Gembucket",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Gembucket"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 16:24:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "388"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"category_id\": 2,\n            \"created\": \"Sat, 15 Apr 2023 07:10:24 GMT\",\n            \"description\": \"adipiscing elit proin interdum mauris non ligula pellentesque ultrices\",\n            \"id\": 9,\n            \"photo\": \"image-6.png\",\n            \"price\": \"16.00\",\n            \"seller_id\": 4,\n            \"title\": \"Gembucket\",\n            \"updated\": \"Mon, 23 Jan 2023 09:34:42 GMT\"\n        }\n    ],\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Read Products",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/products/7",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"products",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Listar Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/products/7",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"products",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 16:42:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "287"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category_id\": 1,\n        \"created\": \"Sat, 15 Apr 2023 07:10:24 GMT\",\n        \"description\": \"Izan\",\n        \"id\": 7,\n        \"photo\": \"image-4.png\",\n        \"price\": \"36.00\",\n        \"seller_id\": 5,\n        \"title\": \"Izan\",\n        \"updated\": \"Fri, 02 Feb 2024 15:58:50 GMT\"\n    },\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "List Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/categories",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/categories",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 16:45:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1401"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Electrònica\",\n            \"slug\": \"electronica\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Roba\",\n            \"slug\": \"roba\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Joguines\",\n            \"slug\": \"joguines\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Ondansetron\",\n            \"slug\": \"Sulfamethoxazole and Trimethoprim\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Sciatic Rescue\",\n            \"slug\": \"Kleenex Clear Antibacterial Skin Cleanser\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Diclofenac Sodium\",\n            \"slug\": \"smart sense acid reducer\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"ConZip\",\n            \"slug\": \"Moexipril Hydrochloride and Hydrochlorothiazide\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Peppermint\",\n            \"slug\": \"BACMIN\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Lorazepam\",\n            \"slug\": \"Disney PLANES FIRE and RESCUE ANTIBACTERIAL HAND WIPES\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Olanzapine\",\n            \"slug\": \"HALOPERIDOL\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"NEXIUM\",\n            \"slug\": \"Chlorpheniramine Maleate\"\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Progesterone\",\n            \"slug\": \"Ribavirin\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Good Neighbor Pharmacy\",\n            \"slug\": \"Morphine sulfate\"\n        },\n        {\n            \"id\": 14,\n            \"name\": \"CareOne Miconazole 3\",\n            \"slug\": \"Metformin Hydrochloride\"\n        }\n    ],\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "List Orders by products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_ENDPOINT}}/products/4/orders",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"products",
+								"4",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Orders by products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ENDPOINT}}/products/4/orders",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"products",
+										"4",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.1 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 02 Feb 2024 18:34:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"buyer_id\": 2,\n            \"created\": \"Fri, 02 Feb 2024 16:17:48 GMT\",\n            \"id\": 1,\n            \"offer\": \"50.00\",\n            \"product_id\": 4\n        }\n    ],\n    \"success\": true\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"var token = jsonData.data.token;\r",
+									"if (token) {\r",
+									"    postman.setEnvironmentVariable(\"token\", token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pruebarole",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "pruebarole",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/tokens",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"tokens"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ENDPOINT}}/tokens",
+									"host": [
+										"{{API_ENDPOINT}}"
+									],
+									"path": [
+										"tokens"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.3.7 Python/3.10.7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 16 Feb 2024 15:52:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"token\": \"ff12ed4ed536cc46323cce07808eaedc\"\n    },\n    \"success\": true\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL-API",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
