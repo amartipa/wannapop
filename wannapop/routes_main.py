@@ -54,7 +54,7 @@ def wannapop_register():
         msg = f"""
                 URL: http://127.0.0.1:5000/verify/{new_user.name}/{token}
         """
-        mail.send_contact_msg( msg, new_user.name, new_user.email)
+        # mail.send_contact_msg( msg, new_user.name, new_user.email)
 
         flash("Nou usuari creat", "success")
         return redirect(url_for('auth_bp.login'))
@@ -138,7 +138,7 @@ def product_create():
         flash('No puedes crear productos porque estás bloqueado.', 'error')
         return redirect(url_for('main_bp.product_list'))
     # select que retorna una llista de resultats
-    categories = Category.get_all_ordered()
+    categories = db.session.query(Category).order_by(Category.id.asc()).all()
 
     # carrego el formulari amb l'objecte products
     form = ProductForm()
