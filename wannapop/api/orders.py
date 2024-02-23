@@ -1,59 +1,112 @@
 from . import api_bp
-from .errors import not_found, bad_request
-from ..models import User, BlockedUser, Product, Order
+from .errors import not_found, bad_request, forbidden_access
+from ..models import User, BlockedUser, Product, Order, ConfirmedOrder
 from ..helper_json import json_request, json_response
-from flask import current_app, request
+from flask import current_app, request, jsonify
+from .helper_auth import basic_auth, token_auth
+
 
 #fer una oferta per un producte
+# @api_bp.route('/orders', methods=['POST'])
+# def create_order():
+#     try:
+#         data = json_request(['product_id','buyer_id','offer'])
+#     except Exception as e:
+#         current_app.logger.debug(e)
+#         return bad_request(str(e))
+#     else:
+#         order = Order.create(**data)
+#         current_app.logger.debug("CREATED Order: {}".format(order.to_dict()))
+#         return json_response(order.to_dict(), 201)
 @api_bp.route('/orders', methods=['POST'])
+@token_auth.login_required
 def create_order():
-    try:
-        data = json_request(['product_id','buyer_id','offer'])
-    except Exception as e:
-        current_app.logger.debug(e)
-        return bad_request(str(e))
-    else:
-        order = Order.create(**data)
-        current_app.logger.debug("CREATED Order: {}".format(order.to_dict()))
-        return json_response(order.to_dict(), 201)
+
+    data = json_request(['product_id', 'offer'])
+    order = Order.get_all_filtered_by(product_id=data['product_id'],buyer_id=basic_auth.current_user().id)
     
-#update
-@api_bp.route('orders/<int:id>', methods=['PUT'])
-def update_order(id):
-    order = Order.get(id)
-    if order:
+    if not order:
         try:
-            data = json_request(['product_id','buyer_id','offer'])
+
+            data['buyer_id'] = basic_auth.current_user().id
         except Exception as e:
+
             current_app.logger.debug(e)
             return bad_request(str(e))
         else:
-            order.update(**data)
-            current_app.logger.debug("CREATED Order: {}".format(order.to_dict()))
-            return json_response(order.to_dict())
+
+            order = Order.create(**data)
+            current_app.logger.debug("CREATED order: {}".format(order.to_dict()))
+            return json_response(order.to_dict(), 201)
     else:
+
+        return bad_request("Order already exists")
+
+    
+#update
+@api_bp.route('/orders/<int:id>', methods=['PUT'])
+@token_auth.login_required
+def update_item(id):
+    order = Order.get(id)
+    
+    if order:
+
+        confirmed_order = ConfirmedOrder.get(id)
+        if order.buyer_id == basic_auth.current_user().id:
+
+            if confirmed_order:
+
+                return bad_request("Order already confirmed")
+            else:
+
+                try:
+
+                    data = json_request(['product_id','offer'], False)
+                    data['buyer_id'] = order.buyer_id
+                except Exception as e:
+
+                    current_app.logger.debug(e)
+                    return bad_request(str(e))
+                else:
+
+                    order.update(**data)
+                    current_app.logger.debug("UPDATED order: {}".format(order.to_dict()))
+                    return json_response(order.to_dict())
+        else:
+
+            return forbidden_access("You are not the buyer in this offer")
+    else:
+
         current_app.logger.debug("Order {} not found".format(id))
-        return not_found("Order not found")
+        return not_found("Item not found")
+    
     
 # Delete order
-@api_bp.route('orders/<int:id>', methods=['DELETE'])
-def delete_order(id):
+@api_bp.route('/orders/<int:id>', methods=['DELETE'])
+@token_auth.login_required 
+def delete_item(id):
+
     order = Order.get(id)
     if order:
-        order.delete()
-        current_app.logger.debug("Deleted Order: {}".format(id))
-        return json_response(order.to_dict())
-    else:
-        current_app.logger.debug("Order {} notfound".format(id))
-        return not_found("Item not found")
 
-from . import api_bp
-from .errors import not_found, bad_request
-from .. import db_manager as db
-from ..models import Category, Product, Order, ConfirmedOrder
-from ..helper_json import json_request, json_response
-from flask import current_app, jsonify
-from .helper_auth import token_auth
+        confirmed_order = ConfirmedOrder.get(id)
+        if order.buyer_id == basic_auth.current_user().id:
+
+            if confirmed_order:
+
+                return bad_request("Order already confirmed")
+            else:
+
+                order.delete()
+                current_app.logger.debug("DELETED item: {}".format(id))
+                return json_response(order.to_dict())
+        else:
+
+            return forbidden_access("You are not the owner of this product")
+    else:
+
+        current_app.logger.debug("Item {} not found".format(id))
+        return not_found("Item not found")
 
 @api_bp.route('/orders/<int:order_id>/confirmed', methods=['POST'])
 @token_auth.login_required
@@ -133,4 +186,6 @@ def cancel_confirmed_order(order_id):
             }), 200
     else:
         return not_found('ConfirmedOrder not found')
+    
+
 
