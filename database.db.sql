@@ -63,6 +63,17 @@ CREATE TABLE IF NOT EXISTS "confirmed_orders" (
 	FOREIGN KEY("order_id") REFERENCES "orders"("id"),
 	PRIMARY KEY("order_id")
 );
+
+CREATE TABLE statuses (
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+name TEXT UNIQUE,
+
+slug TEXT UNIQUE
+
+);
+
 INSERT INTO "categories" VALUES (1,'Electrònica','electronica');
 INSERT INTO "categories" VALUES (2,'Roba','roba');
 INSERT INTO "categories" VALUES (3,'Joguines','joguines');
@@ -94,7 +105,8 @@ INSERT INTO "users" VALUES (15,'pruebatoken','pruebatoken@hotmail.com','pbkdf2:s
 INSERT INTO "users" VALUES (21,'pruebafinal','amartinezp@fp.insjoaquimmir.cat','pbkdf2:sha256:600000$9PafbViodpmiPrDX$d0beaf6feab5c8ad09e5d53871101e5f245eb90a2b1326989db5825d9e2bcb32','admin','2023-11-24 19:56:27','2023-11-24 20:04:16',NULL,1,NULL,NULL);
 INSERT INTO "users" VALUES (25,'este','asdf@hotmail.com','pbkdf2:sha256:600000$q0GGLVQu4rfmJFsh$caec7f211f4be288bc84ffba4beb584ddde8472dce086e1d929768bb7df0b3e7','wanner','2023-12-01 14:32:17','2023-12-01 14:32:17','SGMU2MqbsEktXl6hN8L2ONz9cFM',0,NULL,NULL);
 INSERT INTO "users" VALUES (26,'adri','adria.m.p@hotmail.com','pbkdf2:sha256:600000$IVVAVSsU98jhUs47$b29d205f6b7c1317485f4295f27e56e1b78192bddfc19c16e51a3a52e28002fa','wanner','2023-12-01 14:36:40','2023-12-01 14:37:21',NULL,1,NULL,NULL);
-INSERT INTO "products" VALUES (4,'Zaam-Dox','lectus in quam fringilla rhoncus mauris enim leo rhoncus sed','image-1.png
+INSERT INTO "products" VALUES (4,'Zaam-Dox','lectus in quam fringilla rhoncus mauris enim leo rhoncus sed','image-1.png
+
 ',64,2,2,'2023-04-15 07:10:24','2023-01-23 09:34:42');
 INSERT INTO "products" VALUES (5,'Cookley','primis in faucibus orci luctus et ultrices','image-2.png',12,2,2,'2023-04-15 07:10:24','2023-01-23 09:34:42');
 INSERT INTO "products" VALUES (6,'Matsoft','eleifend donec ut dolor morbi vel lectus','image-3.png',38,1,5,'2023-04-15 07:10:24','2023-01-23 09:34:42');

@@ -8,10 +8,10 @@ load_dotenv(path.join(basedir, '.env'))
 class Config:
     """Base config."""
     SECRET_KEY = environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(basedir, environ.get('SQLITE_FILE_RELATIVE_PATH'))
+    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(basedir, environ.get('SQLITE_FILE_RELATIVE_PATH'))
     # EL POSTGRESSQL FUNCIONA CORRECTAMENTE, LO DEJO COMENTADO YA QUE ES LA RAMA CONJUNTA
     # SQLALCHEMY_DATABASE_URI = "postgresql://2dd12:HHrryn98BHBHMj1x@37.27.3.70:5432/2dd12_pg"
-
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
     IMAGES_UPLOAD_PATH = environ.get('IMAGES_UPLOAD_PATH')  # Asegúrate de que esta variable está en tu archivo .env 
 
     UPLOADS_FOLDER = os.path.join(basedir, IMAGES_UPLOAD_PATH)
